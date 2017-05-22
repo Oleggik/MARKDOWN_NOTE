@@ -1,0 +1,5 @@
+Application/obj/Debug/
+Application/bin/Debug/*
+Application/.vs/MarkdownNotes/v15/.suo
+Application/bin/*
+Application/obj/*
