@@ -301,15 +301,19 @@ namespace MarkdownNotes
         private void MenuItemRename_Click(object sender, RoutedEventArgs e)
         {
             
-            if (NotesList.SelectedIndex == 1)
+            if (NotesList.SelectedIndex == -1)
             {
                 return;
             }
+            string newName = Interaction.InputBox("NewName");
+            if (newName == "")
+                return;
+            (NotesList.SelectedItems[0] as Note).Name = newName;
+            NotesList.Items.Refresh();
 
-            (NotesList.Items.CurrentItem as Note).Name = Interaction.InputBox("NewName");
 
             //string NoteName = Interaction.InputBox("NewName");
-            NotesDL.GetInstance.UpdateNoteName(((Note) NotesList.SelectedItems).Id, (NotesList.Items.CurrentItem as Note).Name);
+            NotesDL.GetInstance.UpdateNoteName((NotesList.SelectedItems[0] as Note).Id, (NotesList.SelectedItems[0] as Note).Name);
             InitNotes();
             //(NotesList.Items.CurrentItem as Note).Name = Interaction.InputBox("NewName");
             //NotesList.Items.Refresh();
@@ -381,7 +385,8 @@ namespace MarkdownNotes
             string textNotes = NoteText.Text;
             if (textNotes.Contains(ToFind.Text))
             {
-                Console.ForegroundColor = ConsoleColor.Green;
+                NoteText.Focus();
+                NoteText.Text = NoteText.Text.Replace(ToFind.Text, ToChange.Text);
             }
             else
             {
