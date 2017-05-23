@@ -122,8 +122,8 @@
             <Label x:Name="FindAndChange" Visibility="Hidden" Background="White" Margin="360,-522,525,433"/>
             <TextBox x:Name="ToFind"   HorizontalAlignment="Left" Height="32" Margin="375,-518,0,0" TextWrapping="Wrap" Text="To Find" VerticalAlignment="Top" Width="201" GotFocus="ToFind_OnGotFocus"  LostFocus="ToFind_OnLostFocus"/>
             <TextBox x:Name="ToChange"  HorizontalAlignment="Left" Height="32" Margin="376,-481,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" GotFocus="ToChange_OnGotFocus"  LostFocus="ToChange_OnLostFocus"/>
-            <Button x:Name="ToFindButton"  Height="Auto" Margin="593,-518,529,486"  Click="FindText_OnClick"/>
-           
+            <Button x:Name="ToFindButton"  Height="Auto" Margin="597,-481,525,449"  Click="FindText_OnClick"/>
+            <Button x:Name="Catch" Height="Auto" Margin="606,-515,525,486" Click="CatchText_OnClick" Background="#FF68FF00"/>
             <WebBrowser  x:Name="RenderdMarkDownNote" HorizontalAlignment="Left" Height="475" Margin="636,-524,0,0" VerticalAlignment="Top" Width="515" Navigating="RenderdMarkDownNote_Navigating" />
 
             <TextBox x:Name="FilterString" Margin="1,-524,1055,496" TextChanged="FilterString_TextChanged"/>

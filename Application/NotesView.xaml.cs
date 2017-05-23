@@ -383,15 +383,26 @@ namespace MarkdownNotes
         private void FindText_OnClick(object sender, RoutedEventArgs e)
         {
             string textNotes = NoteText.Text;
-            if (textNotes.Contains(ToFind.Text))
-            {
-                NoteText.Focus();
-                NoteText.Text = NoteText.Text.Replace(ToFind.Text, ToChange.Text);
-            }
-            else
+            if (textNotes == "")
+                return;
+            int pos = NoteText.SelectionStart + NoteText.SelectionLength;
+            string nextText = NoteText.Text.Substring(pos, NoteText.Text.Length - pos);
+            int posOffset = nextText.IndexOf(ToFind.Text);
+            if (posOffset < 0)
             {
                 MessageBox.Show("No matches found");
+                NoteText.SelectionStart = pos = 0;
+                NoteText.SelectionLength = 0;
+                return;
             }
+            NoteText.Focus();
+            NoteText.SelectionStart = pos + posOffset;
+            NoteText.SelectionLength = ToFind.Text.Length;
+        }
+
+        private void CatchText_OnClick(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
