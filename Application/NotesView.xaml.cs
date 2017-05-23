@@ -391,8 +391,8 @@ namespace MarkdownNotes
             if (posOffset < 0)
             {
                 MessageBox.Show("No matches found");
-                NoteText.SelectionStart = pos = 0;
-                NoteText.SelectionLength = 0;
+                //NoteText.SelectionStart = pos = 0;
+                //NoteText.SelectionLength = 0;
                 return;
             }
             NoteText.Focus();
