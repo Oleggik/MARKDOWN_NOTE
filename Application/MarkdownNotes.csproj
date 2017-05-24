@@ -84,9 +84,6 @@
     <Compile Include="NotesView.xaml.cs">
       <DependentUpon>NotesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Question.xaml.cs">
-      <DependentUpon>Question.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserList.xaml.cs">
       <DependentUpon>UserList.xaml</DependentUpon>
     </Compile>
@@ -107,10 +104,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="NotesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Question.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

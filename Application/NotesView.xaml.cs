@@ -47,10 +47,12 @@ namespace MarkdownNotes
         {
             var addedItems = e.AddedItems;
             if (addedItems.Count > 0)
-            {
-                NoteText.Text = NotesDL.GetInstance.GetNote(((Note)addedItems[0]).Id).Text;
+            {      
+                NoteText.Text = NotesDL.GetInstance.GetNote(((Note)addedItems[0]).Id).Text;  
             }
             RenderMarkDown(NoteText.Text);
+            NoteText.Focus();
+            NoteText.SelectionStart = NoteText.Text.Length;
         }
 
         private void ButtonSave_OnClick(object sender, RoutedEventArgs e)
@@ -73,8 +75,8 @@ namespace MarkdownNotes
                 
                 NewNoteNameTextBox.Visibility = Visibility.Hidden;
                 NewNoteNameTextBox.Text = string.Empty;
-                
             }
+            MessageBox.Show("File successfully saved");
         }
 
         private void CreateNewNote_OnClick(object sender, RoutedEventArgs e)
@@ -109,29 +111,16 @@ namespace MarkdownNotes
 
         private void SaveFile_OnClick(object sender, RoutedEventArgs e)
         {
-            //System.IO.Stream myStream = null;
             SaveFileDialog file = new SaveFileDialog();
             file.FileName = "Note";
             file.DefaultExt = ".md";
             file.Filter = "Markdown Files (.md)|*.md";
-
-            // Show save file dialog box
-            //Nullable<bool> result = file.ShowDialog();
-
-            // Process save file dialog box results
             if (file.ShowDialog() == true)
             {
-                try
-                {
                             string filename = file.FileName;
                             File.WriteAllText(filename, NoteText.Text);
                             
-                            MessageBox.Show("Файл сохранен");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
-                }
+                            MessageBox.Show("File successfully saved");    
             }
         }
 
@@ -223,6 +212,11 @@ namespace MarkdownNotes
             {
                 disableNavigation = false;
                 RenderdMarkDownNote.NavigateToString(PrepareHtmlBody(CommonMark.CommonMarkConverter.Convert(text)));
+                
+            }
+            else
+            {
+                RenderdMarkDownNote.Refresh();
             }
         }
 
@@ -287,12 +281,8 @@ namespace MarkdownNotes
             (NotesList.SelectedItems[0] as Note).Name = newName;
             NotesList.Items.Refresh();
 
-
-            //string NoteName = Interaction.InputBox("NewName");
             NotesDL.GetInstance.UpdateNoteName((NotesList.SelectedItems[0] as Note).Id, (NotesList.SelectedItems[0] as Note).Name);
             InitNotes();
-            //(NotesList.Items.CurrentItem as Note).Name = Interaction.InputBox("NewName");
-            //NotesList.Items.Refresh();
         }
 
 
@@ -313,11 +303,6 @@ namespace MarkdownNotes
             window1.Show();
         }
 
-       // private void MenuItemRename_Click(object sender, RoutedEventArgs e)
-       // {
-       //     throw new NotImplementedException();
-       // }
-
         private void LogOut_Click(object sender, RoutedEventArgs e)
         {
             MainWindow window1 = new MainWindow();
@@ -329,19 +314,6 @@ namespace MarkdownNotes
         {
             InitNotes();
         }
-
-        //private void FindText_OnClick(object sender, EventArgs e)
-        //{
-        //    string textNotes = NoteText.Text;
-        //    if (textNotes.Contains(ToFind.Text))
-        //    {
-        //        Console.ForegroundColor = ConsoleColor.Green;
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("No matches found");
-        //    }
-        //}
 
         private void FilterString_TextChanged(object sender, TextChangedEventArgs e)
         {

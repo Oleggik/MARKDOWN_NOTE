@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Security.Cryptography;
 
 namespace MarkdownNotes
 {
@@ -25,16 +26,29 @@ namespace MarkdownNotes
         {
             InitializeComponent();
             textBoxLogin.Focus();
-
-
         }
-
-
 
         private void buttonLogin_Click(object sender, RoutedEventArgs e)
         {
+            MD5 md5Hasher = MD5.Create();
 
-            if (passwordBoxPassword.Password.ToString() == UsersDL.GetInstance.GetUserPassword(textBoxLogin.Text))
+            // Преобразуем входную строку в массив байт и вычисляем хэш
+            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(passwordBox.Text));
+
+            // Создаем новый Stringbuilder (Изменяемую строку) для набора байт
+            StringBuilder sBuilder = new StringBuilder();
+
+            // Преобразуем каждый байт хэша в шестнадцатеричную строку
+            for (int i = 0; i < data.Length; i++)
+            {
+                //указывает, что нужно преобразовать элемент в шестнадцатиричную строку длиной в два символа
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+
+            string s;
+            s = sBuilder.ToString();
+
+            if (s == UsersDL.GetInstance.GetUserPassword(textBoxLogin.Text))
             {
 
                 Application.Current.Properties["UserName"] =  textBoxLogin.Text;
@@ -51,7 +65,26 @@ namespace MarkdownNotes
 
         private void buttonRegistr_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(UsersDL.GetInstance.AddNewUser(textBoxLogin.Text, passwordBoxPassword.Password.ToString())))
+
+            MD5 md5Hasher = MD5.Create();
+
+            // Преобразуем входную строку в массив байт и вычисляем хэш
+            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(passwordBox.Text));
+
+            // Создаем новый Stringbuilder (Изменяемую строку) для набора байт
+            StringBuilder sBuilder = new StringBuilder();
+
+            // Преобразуем каждый байт хэша в шестнадцатеричную строку
+            for (int i = 0; i < data.Length; i++)
+            {
+                //указывает, что нужно преобразовать элемент в шестнадцатиричную строку длиной в два символа
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+
+            string s;
+            s = sBuilder.ToString();
+
+            if (!string.IsNullOrEmpty(UsersDL.GetInstance.AddNewUser(textBoxLogin.Text, s)))
                 MessageBox.Show("This name is already use. Try a different name");
             else
             {
@@ -59,44 +92,24 @@ namespace MarkdownNotes
             }
         }
 
-        private void passwordBoxPassword_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-
-        }
-
         private void ShowPassword_Checked(object sender, RoutedEventArgs e)
         {
-       //     MessageBox.Show($"{passwordBoxPassword.Password}");
-            passwordBoxPassword.Password = passwordBoxPassword.Password;
+
+             //MessageBox.Show($"{passwordBoxPassword.Password}");
+            //passwordBox.Text = passwordBox.Text;
         }
 
-        private void ShowPassword_Unchecked(object sender, RoutedEventArgs e)
+        //private void ShowPassword_Unchecked(object sender, RoutedEventArgs e)
+        //{
+        //    string s = new string('*', passwordBox.Text.Length);
+
+        //    String.Replace(passwordBox.Text, s);
+        //}
+
+        private void ChangeSymbolsInPassword(object sender, TextCompositionEventArgs e)
+
         {
-
+            
         }
-
-        //private void TextBoxLogin_OnGotFocus(object sender, RoutedEventArgs e)
-        //{
-        //    if (textBoxLogin.Text == "Login")
-        //        textBoxLogin.Text = String.Empty;
-        //}
-
-        //private void TextBoxLogin_OnLostFocus(object sender, RoutedEventArgs e)
-        //{
-        //    if (textBoxLogin.Text == String.Empty)
-        //        textBoxLogin.Text = "Login";
-        //}
-
-        //private void TextBoxPassword_OnGotFocus(object sender, RoutedEventArgs e)
-        //{
-        //    if (textBoxPassword.Text == "Password")
-        //        textBoxPassword.Text = String.Empty;
-        //}
-
-        //private void TextBoxPassword_OnLostFocus(object sender, RoutedEventArgs e)
-        //{
-        //    if (textBoxPassword.Text == String.Empty)
-        //        textBoxPassword.Text = "Password";
-        //}
     }
 }

@@ -41,12 +41,13 @@
         
         
 
-        <PasswordBox Grid.Row="2" x:Name="passwordBoxPassword"   
+        <TextBox Grid.Row="2" x:Name="passwordBox"   
                   VerticalAlignment="Top"   Grid.Column="1" Margin="0,55,26,0" 
                   Width="165" HorizontalAlignment="Right" Height="28"
-                  IsVisibleChanged="passwordBoxPassword_IsVisibleChanged"/>
+                  
+                 PreviewTextInput="ChangeSymbolsInPassword"/>
             
-        <CheckBox x:Name="ShowPassword" Content="Show password" IsChecked="False" Grid.ColumnSpan="2" Margin="99,86,54,32" Grid.Row="2" Checked="ShowPassword_Checked" Unchecked="ShowPassword_Unchecked"/>
+        <!--<CheckBox x:Name="ShowPassword" Content="Show password" IsChecked="False" Grid.ColumnSpan="2" Margin="99,86,54,32" Grid.Row="2" Checked="ShowPassword_Checked" Unchecked="ShowPassword_Unchecked"/>-->
                
         <Label Content="Login" HorizontalAlignment="Left" Width="65" Grid.ColumnSpan="2" Margin="25,32,0,85" Grid.Row="2"       />
 

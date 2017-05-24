@@ -1,17 +1,76 @@
-﻿<Window
+﻿    <Window x:Class="MarkdownNotes.Find_and_Change"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MarkdownNotes"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="MarkdownNotes.Find_and_Change"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="13"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         mc:Ignorable="d"
-        Title="Find_and_Change" Height="162" Width="300" WindowStartupLocation="Manual" Topmost="True" ResizeMode="NoResize" WindowStyle="ToolWindow" Left="550" Top="200">
-    <Grid Margin="0,0,0,-9">
-
-        <TextBox x:Name="ToFind" Margin="10,18,80,0" Height="37" VerticalAlignment="Top"/>
-        <TextBox x:Name="ToChange" Margin="10,55,80,0" Height="32" VerticalAlignment="Top"/>
-        <Button x:Name="Find"  Height="32" Margin="225,18,13,0"  Click="FindText_OnClick" VerticalAlignment="Top">
+        Icon="Icon.ico"
+        Title="Find and change" 
+        Height="209.158" Width="280.351" 
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen"
+        Topmost="True">
+        <Grid >
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar Style="{DynamicResource MaterialDesignToolBar}" Margin="146,66,-328,-66" VerticalAlignment="Top" VerticalContentAlignment="Top" Height="52" RenderTransformOrigin="0.5,0.5">
+                <ToolBar.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </ToolBar.RenderTransform>
+                <Button ToolTip="Find" Click="FindText_OnClick" VerticalAlignment="Top">
+                    <materialDesign:PackIcon Kind="Altimeter" RenderTransformOrigin="0.5,0.5">
+                        <materialDesign:PackIcon.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="-90"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </materialDesign:PackIcon.RenderTransform>
+                    </materialDesign:PackIcon>
+                </Button>
+                <Button ToolTip="Change" Click="CatchText_OnClick" VerticalAlignment="Top">
+                    <materialDesign:PackIcon Kind="pen" RenderTransformOrigin="0.5,0.5">
+                        <materialDesign:PackIcon.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="-90"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </materialDesign:PackIcon.RenderTransform>
+                    </materialDesign:PackIcon>
+                </Button>
+                <Button ToolTip="Change All" Click="ChangeAll_onClick" VerticalAlignment="Top">
+                    <materialDesign:PackIcon Kind="PlaylistCheck" RenderTransformOrigin="0.5,0.5">
+                        <materialDesign:PackIcon.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="-90"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </materialDesign:PackIcon.RenderTransform>
+                    </materialDesign:PackIcon>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <Label Content="Find text:" Margin="13,17,177,133"  />
+        <Label Content="Change text:" Margin="13,95,177,53"  />
+        <TextBox x:Name="ToFind" Margin="10,36,65,0" Height="37" VerticalAlignment="Top"/>
+        <TextBox x:Name="ToChange" Margin="10,115,65,0" Height="32" VerticalAlignment="Top"/>
+        <!--<Button x:Name="Find"  Height="32" Margin="225,18,13,0" Background="Aqua"  Click="FindText_OnClick" VerticalAlignment="Top">
             <materialDesign:PackIcon Kind="Altimeter"/>
         </Button>
         <Button x:Name="Tochange" Height="32" Margin="225,55,13,0" Click="CatchText_OnClick" Background="#FF68FF00" VerticalAlignment="Top">
@@ -19,7 +78,7 @@
         </Button>
         <Button x:Name="ChangeAll" Height="32" Margin="225,92,12,0" Click="ChangeAll_onClick" Background="#FF0000" VerticalAlignment="Top">
             <materialDesign:PackIcon Kind="PlaylistCheck"/>
-        </Button>
+        </Button>-->
 
     </Grid>
 </Window>
