@@ -78,6 +78,9 @@
     <Compile Include="DataAccess\NotesDL.cs" />
     <Compile Include="DataAccess\UsersDL.cs" />
     <Compile Include="DataAccess\MasterDL.cs" />
+    <Compile Include="Find and Change.xaml.cs">
+      <DependentUpon>Find and Change.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NotesView.xaml.cs">
       <DependentUpon>NotesView.xaml</DependentUpon>
     </Compile>
@@ -87,6 +90,10 @@
     <Compile Include="UserList.xaml.cs">
       <DependentUpon>UserList.xaml</DependentUpon>
     </Compile>
+    <Page Include="Find and Change.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

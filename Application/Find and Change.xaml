@@ -1,0 +1,25 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MarkdownNotes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="MarkdownNotes.Find_and_Change"
+        mc:Ignorable="d"
+        Title="Find_and_Change" Height="162" Width="300" WindowStartupLocation="Manual" Topmost="True" ResizeMode="NoResize" WindowStyle="ToolWindow" Left="550" Top="200">
+    <Grid Margin="0,0,0,-9">
+
+        <TextBox x:Name="ToFind" Margin="10,18,80,0" Height="37" VerticalAlignment="Top"/>
+        <TextBox x:Name="ToChange" Margin="10,55,80,0" Height="32" VerticalAlignment="Top"/>
+        <Button x:Name="Find"  Height="32" Margin="225,18,13,0"  Click="FindText_OnClick" VerticalAlignment="Top">
+            <materialDesign:PackIcon Kind="Altimeter"/>
+        </Button>
+        <Button x:Name="Tochange" Height="32" Margin="225,55,13,0" Click="CatchText_OnClick" Background="#FF68FF00" VerticalAlignment="Top">
+            <materialDesign:PackIcon Kind="pen"/>
+        </Button>
+        <Button x:Name="ChangeAll" Height="32" Margin="225,92,12,0" Click="ChangeAll_onClick" Background="#FF0000" VerticalAlignment="Top">
+            <materialDesign:PackIcon Kind="PlaylistCheck"/>
+        </Button>
+
+    </Grid>
+</Window>

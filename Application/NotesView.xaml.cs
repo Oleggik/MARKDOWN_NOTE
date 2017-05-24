@@ -25,11 +25,11 @@ namespace MarkdownNotes
     /// </summary>
     public partial class NotesView : Window
     {
+        Find_and_Change finder;
         public NotesView()
         {           
             InitializeComponent();
             InitNotes();
-
         }
 
         private static bool disableNavigation;
@@ -87,10 +87,9 @@ namespace MarkdownNotes
 
         private void FindAndChange_OnClick(object sender, RoutedEventArgs e)
         {
-            ToFind.Visibility = Visibility.Visible;
-            ToChange.Visibility = Visibility.Visible;
-            FindAndChange.Visibility = Visibility.Visible;
-            ToFindButton.Visibility = Visibility.Visible;
+            if (finder == null)
+                finder = new Find_and_Change(this);
+            finder.Show();
         }
 
         private void OpenFile_OnClick(object sender, System.EventArgs e)
@@ -108,9 +107,9 @@ namespace MarkdownNotes
             }
         }
 
-        private async void SaveFile_OnClick(object sender, RoutedEventArgs e)
+        private void SaveFile_OnClick(object sender, RoutedEventArgs e)
         {
-            System.IO.Stream myStream = null;
+            //System.IO.Stream myStream = null;
             SaveFileDialog file = new SaveFileDialog();
             file.FileName = "Note";
             file.DefaultExt = ".md";
@@ -218,30 +217,6 @@ namespace MarkdownNotes
                 NewNoteNameTextBox.Text = "Note Name";
         }
 
-        private void ToFind_OnGotFocus(object sender, RoutedEventArgs e)
-        {
-            if (ToFind.Text == "To Find")
-                ToFind.Text = String.Empty;
-        }
-
-        private void ToFind_OnLostFocus(object sender, RoutedEventArgs e)
-        {
-            if (ToFind.Text == String.Empty)
-                ToFind.Text = "To Find";
-        }
-
-        private void ToChange_OnGotFocus(object sender, RoutedEventArgs e)
-        {
-            if (ToChange.Text == "To Change")
-                ToChange.Text = String.Empty;
-        }
-
-        private void ToChange_OnLostFocus(object sender, RoutedEventArgs e)
-        {
-            if (ToChange.Text == String.Empty)
-                ToChange.Text = "To Change";
-        }
-
         private void RenderMarkDown(string text)
         {
             if (!string.IsNullOrEmpty(NoteText.Text))
@@ -253,8 +228,9 @@ namespace MarkdownNotes
 
         private void NoteText_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-
-                RenderMarkDown(NoteText.Text);
+            RenderMarkDown(NoteText.Text);
+            string WordCount = (NoteText.Text.Count(x => x == ' ') + 2).ToString();
+            string LinesCount = (NoteText.Text.Count(x => x == '\n') + 1).ToString();
         }
 
         private void RenderdMarkDownNote_Navigating(object sender, NavigatingCancelEventArgs e)
@@ -378,31 +354,6 @@ namespace MarkdownNotes
                 }
                 return false;
             };
-        }
-
-        private void FindText_OnClick(object sender, RoutedEventArgs e)
-        {
-            string textNotes = NoteText.Text;
-            if (textNotes == "")
-                return;
-            int pos = NoteText.SelectionStart + NoteText.SelectionLength;
-            string nextText = NoteText.Text.Substring(pos, NoteText.Text.Length - pos);
-            int posOffset = nextText.IndexOf(ToFind.Text);
-            if (posOffset < 0)
-            {
-                MessageBox.Show("No matches found");
-                //NoteText.SelectionStart = pos = 0;
-                //NoteText.SelectionLength = 0;
-                return;
-            }
-            NoteText.Focus();
-            NoteText.SelectionStart = pos + posOffset;
-            NoteText.SelectionLength = ToFind.Text.Length;
-        }
-
-        private void CatchText_OnClick(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
