@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Security.Cryptography;
+using System.Threading;
 
 namespace MarkdownNotes
 {
@@ -33,7 +34,7 @@ namespace MarkdownNotes
             MD5 md5Hasher = MD5.Create();
 
             // Преобразуем входную строку в массив байт и вычисляем хэш
-            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(passwordBox.Text));
+            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(pas));
 
             // Создаем новый Stringbuilder (Изменяемую строку) для набора байт
             StringBuilder sBuilder = new StringBuilder();
@@ -69,7 +70,7 @@ namespace MarkdownNotes
             MD5 md5Hasher = MD5.Create();
 
             // Преобразуем входную строку в массив байт и вычисляем хэш
-            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(passwordBox.Text));
+            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(pas));
 
             // Создаем новый Stringbuilder (Изменяемую строку) для набора байт
             StringBuilder sBuilder = new StringBuilder();
@@ -92,24 +93,40 @@ namespace MarkdownNotes
             }
         }
 
-        private void ShowPassword_Checked(object sender, RoutedEventArgs e)
-        {
-
-             //MessageBox.Show($"{passwordBoxPassword.Password}");
-            //passwordBox.Text = passwordBox.Text;
-        }
-
-        //private void ShowPassword_Unchecked(object sender, RoutedEventArgs e)
-        //{
-        //    string s = new string('*', passwordBox.Text.Length);
-
-        //    String.Replace(passwordBox.Text, s);
-        //}
+        string pas = "";
+        int i = 0;
 
         private void ChangeSymbolsInPassword(object sender, TextCompositionEventArgs e)
 
         {
+            pas = pas + e.Text;
+            i++;
+            passwordBox.Text = new string('*', i);
+            passwordBox.SelectionStart = passwordBox.Text.Length;
+        }
+
+        private void Backspace_OnClick(object sender, KeyEventArgs e)
+        {
             
+            if (e.Key == Key.Back)
+            
+            {
+                i--;
+                pas = pas.Remove(pas.Length - 1, 1);
+                passwordBox.SelectionStart = passwordBox.Text.Length - 1;
+            }
+        }
+
+        private void ShowPassword_Checked(object sender, RoutedEventArgs e)
+        {
+            passwordBox.Text = pas;
+        }
+
+        private void ShowPassword_Unchecked(object sender, RoutedEventArgs e)
+        {
+            string s = new string('*', passwordBox.Text.Length);
+            s.Replace(passwordBox.Text, s);
+            passwordBox.Text = s;
         }
     }
 }

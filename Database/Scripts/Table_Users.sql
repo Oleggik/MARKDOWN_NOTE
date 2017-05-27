@@ -1,7 +1,6 @@
 USE [MarkdownNotes]
 GO
 
-/****** Object:  Table [dbo].[Users]    Script Date: 3/15/2017 9:34:08 AM ******/
 SET ANSI_NULLS ON
 GO
 

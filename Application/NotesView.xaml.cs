@@ -87,6 +87,18 @@ namespace MarkdownNotes
             NewNoteNameTextBox.Visibility = Visibility.Visible;
         }
 
+        private void AddCategory_OnClick(object sender, RoutedEventArgs e)
+        {
+            //Category category = new Category
+            //{
+            //    Name = Interaction.InputBox("CategoryName")
+            //};
+
+            //CategoryDL.GetInstance.AddCategory(Application.Current.Properties["CategoryName"].ToString());
+            //InitCategory();
+            //MessageBox.Show("Category successfully created");
+        }
+
         private void FindAndChange_OnClick(object sender, RoutedEventArgs e)
         {
             if (finder == null)
@@ -212,7 +224,6 @@ namespace MarkdownNotes
             {
                 disableNavigation = false;
                 RenderdMarkDownNote.NavigateToString(PrepareHtmlBody(CommonMark.CommonMarkConverter.Convert(text)));
-                
             }
             else
             {
@@ -229,7 +240,6 @@ namespace MarkdownNotes
 
         private void RenderdMarkDownNote_Navigating(object sender, NavigatingCancelEventArgs e)
         {
-
             // first page needs to be loaded in webBrowser control
             if (!disableNavigation)
             {
@@ -237,8 +247,7 @@ namespace MarkdownNotes
                 return;
             }
             e.Cancel = true;
-           OpenWebsite(e.Uri.ToString());
-
+            OpenWebsite(e.Uri.ToString());
         }
 
         public static void OpenWebsite(string url)
@@ -300,6 +309,13 @@ namespace MarkdownNotes
         {
             Application.Current.Properties["SelsectedNote"] =  ((Note)NotesList.Items[NotesList.SelectedIndex]).Id;
             UserList window1 = new UserList();
+            window1.Show();
+        }
+
+        private void MenuItemToCategory_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Properties["SelsectedNote"] = ((Note)NotesList.Items[NotesList.SelectedIndex]).Id;
+            CategoryList window1 = new CategoryList();
             window1.Show();
         }
 

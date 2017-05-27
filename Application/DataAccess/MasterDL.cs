@@ -204,5 +204,46 @@ namespace MarkdownNotes.DataAccess
 
             return notes.ToArray();
         }
+
+        public Category[] GetCategorylist(string userName)
+        {
+            List<Category> notes = new List<Category>();
+            using (var conn = new SqlConnection(connectionString))
+            {
+                using (var cmd = new SqlCommand("dc_CategoryListGet_1", conn) { CommandType = CommandType.StoredProcedure })
+                {
+                    var returnValueParam = new SqlParameter("@ReturnValue", SqlDbType.NVarChar, 1000)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+
+                    cmd.Parameters.Add(returnValueParam);
+
+                    conn.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader != null && reader.HasRows)
+                        {
+                            int fieldIDIndex = reader.GetOrdinal("ID");
+                            int fieldNameIndex = reader.GetOrdinal("Name");
+
+                            while (reader.Read())
+                            {
+                                Category note = new Category()
+                                {
+                                    Id = reader.GetInt32(fieldIDIndex),
+                                    Name = reader.GetString(fieldNameIndex)
+                                };
+                                notes.Add(note);
+                            }
+                        }
+                    }
+
+                }
+            }
+
+            return notes.ToArray();
+        }
+
     }
 }

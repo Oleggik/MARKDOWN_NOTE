@@ -13,63 +13,28 @@
         mc:Ignorable="d"
         Icon="Icon.ico"
         Title="Find and change" 
-        Height="209.158" Width="280.351" 
+        Height="209.158" Width="222.386" 
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen"
         Topmost="True">
         <Grid >
         <ToolBarTray DockPanel.Dock="Top">
-            <ToolBar Style="{DynamicResource MaterialDesignToolBar}" Margin="146,66,-328,-66" VerticalAlignment="Top" VerticalContentAlignment="Top" Height="52" RenderTransformOrigin="0.5,0.5">
-                <ToolBar.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </ToolBar.RenderTransform>
+            <ToolBar Style="{DynamicResource MaterialDesignToolBar}" Margin="4,117,-186,-117" VerticalContentAlignment="Top" Height="52">
                 <Button ToolTip="Find" Click="FindText_OnClick" VerticalAlignment="Top">
-                    <materialDesign:PackIcon Kind="Altimeter" RenderTransformOrigin="0.5,0.5">
-                        <materialDesign:PackIcon.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="-90"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </materialDesign:PackIcon.RenderTransform>
-                    </materialDesign:PackIcon>
+                    <materialDesign:PackIcon Kind="Altimeter" />
                 </Button>
                 <Button ToolTip="Change" Click="CatchText_OnClick" VerticalAlignment="Top">
-                    <materialDesign:PackIcon Kind="pen" RenderTransformOrigin="0.5,0.5">
-                        <materialDesign:PackIcon.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="-90"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </materialDesign:PackIcon.RenderTransform>
-                    </materialDesign:PackIcon>
+                    <materialDesign:PackIcon Kind="pen"/>
                 </Button>
                 <Button ToolTip="Change All" Click="ChangeAll_onClick" VerticalAlignment="Top">
-                    <materialDesign:PackIcon Kind="PlaylistCheck" RenderTransformOrigin="0.5,0.5">
-                        <materialDesign:PackIcon.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="-90"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </materialDesign:PackIcon.RenderTransform>
-                    </materialDesign:PackIcon>
+                    <materialDesign:PackIcon Kind="PlaylistCheck"/>
                 </Button>
             </ToolBar>
         </ToolBarTray>
-        <Label Content="Find text:" Margin="13,17,177,133"  />
-        <Label Content="Change text:" Margin="13,95,177,53"  />
-        <TextBox x:Name="ToFind" Margin="10,36,65,0" Height="37" VerticalAlignment="Top"/>
-        <TextBox x:Name="ToChange" Margin="10,115,65,0" Height="32" VerticalAlignment="Top"/>
+        <Label Content="Find text:" Margin="-276,36,466,114"  />
+        <Label Content="Change text:" Margin="-303,115,493,33"  />
+        <TextBox x:Name="ToFind" Margin="10,23,10,0" Height="37" VerticalAlignment="Top" materialDesign:HintAssist.Hint="Find text"/>
+        <TextBox x:Name="ToChange" Margin="10,76,10,0" Height="32" VerticalAlignment="Top" materialDesign:HintAssist.Hint="Change text"/>
         <!--<Button x:Name="Find"  Height="32" Margin="225,18,13,0" Background="Aqua"  Click="FindText_OnClick" VerticalAlignment="Top">
             <materialDesign:PackIcon Kind="Altimeter"/>
         </Button>

@@ -17,6 +17,7 @@ CREATE PROCEDURE [dbo].[dc_NoteAdd_1]
   @UserName nvarchar(Max),
   @NoteName nvarchar(Max),
   @NoteText nvarchar(Max),
+  @CategoryID nvarchar(Max),
   @IsHidden bit,
   @SharedToEveryone bit,
   @ReturnValue nvarchar(50) output
@@ -33,7 +34,7 @@ BEGIN
 
   IF NOT EXISTS (SELECT 1 FROM dbo.NotesSharing ns INNER JOIN dbo.Notes nt ON ns.NoteID = nt.ID where ns.UserID = @UserID and nt.Name = @NoteName)
   BEGIN
-	INSERT INTO [dbo].[Notes] ([Name] ,[Text],[IsHidden],[SharedToEveryone], [OwnerID]) VALUES  (@NoteName,@NoteText, @IsHidden, @SharedToEveryone,@UserID )
+	INSERT INTO [dbo].[Notes] ([Name] ,[Text], [CategoryID], [IsHidden],[SharedToEveryone], [OwnerID]) VALUES  (@NoteName,@NoteText, @CategoryID, @IsHidden, @SharedToEveryone,@UserID )
 	SELECT @NewNoteID = SCOPE_IDENTITY()
 
 	INSERT INTO [dbo].[NotesSharing] ([NoteID] ,[UserID],[ReadOnly] ) VALUES  (@NewNoteID,@UserID, 0 )
@@ -43,12 +44,7 @@ BEGIN
 	SET @ReturnValue = 'Note "' + @NoteName + '" exist for user ' +@UserName
   END
 
-  
-
-/*GRANT EXEC ON dbo.dc_NoteGet_1 TO sa
-SELECT [Password] FROM MarkdownNotes.dbo.Notes Where NoteName =  'Note1'
-*/
-END
+  END
 
 GO
 

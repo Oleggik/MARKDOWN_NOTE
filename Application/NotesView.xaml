@@ -13,7 +13,7 @@
         mc:Ignorable="d"
         Icon="Icon.ico"
         Title="NotesView" 
-        Height="599.161" 
+        Height="635.161" 
         Width="1193.988" 
         WindowStartupLocation="CenterScreen" 
         ResizeMode="NoResize" 
@@ -21,7 +21,11 @@
     <DockPanel>
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar Style="{DynamicResource MaterialDesignToolBar}" Margin="0,0,-248,533">
-                <Button ToolTip="NewNote" Click="CreateNewNote_OnClick">
+                <Button ToolTip="New Category" Click="AddCategory_OnClick">
+                    <materialDesign:PackIcon Kind="TagOutline" Height="24" Width="24"/>
+                </Button>
+                <Separator/>
+                <Button ToolTip="New Note" Click="CreateNewNote_OnClick">
                     <materialDesign:PackIcon Kind="NewBox" Height="24" Width="24"/>
                 </Button>
                 <Button ToolTip="Open" Click="OpenFile_OnClick">
@@ -79,14 +83,10 @@
                 <Button ToolTip="logout" Click="LogOut_Click">
                     <materialDesign:PackIcon Kind="Logout"/>
                 </Button>
-                <!--<Button ToolTip="Find and change" Click="FindAndChange_OnClick">
-                    <materialDesign:PackIcon Kind="FileFind"/>
-                </Button>-->
-                
             </ToolBar>
         </ToolBarTray>
         <Grid VerticalAlignment="Top" Margin="16">
-            <ListBox BorderBrush="Orange" BorderThickness="2" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemsSource="{DynamicResource Notes}" Grid.IsSharedSizeScope="True" x:Name="NotesList"  HorizontalAlignment="Left" Height="442" Margin="-12,-483,0,0" VerticalAlignment="Top" Width="113" SelectionChanged="ListBox_SelectionChanged"  >
+            <ListBox  BorderBrush="Orange" BorderThickness="2" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemsSource="{DynamicResource Notes}" Grid.IsSharedSizeScope="True" x:Name="NotesList"  HorizontalAlignment="Left" Height="442" Margin="-12,-514,0,0" VerticalAlignment="Top" Width="113" SelectionChanged="ListBox_SelectionChanged"  >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -96,6 +96,7 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Margin="2" Text="{Binding ID}" Grid.Column="0"/>
                             <TextBlock Margin="2"  Text="{Binding Name}" Grid.Column="1"/>
+                            
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -106,7 +107,7 @@
                         <MenuItem Header="Rename" Click="MenuItemRename_Click" />
                         <MenuItem Header="Delete" Click="MenuItemDelete_Click" />
                         <MenuItem Header="Share" Click="MenuItemShare_Click" />
-                        <!--<MenuItem Header="Rename" Click="MenuItemRename_Click" />-->
+                        <MenuItem Header="To category" Click="MenuItemToCategory_Click" />
                     </ContextMenu>
 
                     <!--Sets a context menu for each ListBoxItem in the current ListBox-->
@@ -117,7 +118,7 @@
                 </ListBox.Resources>
             </ListBox>
             <TextBox x:Name="NoteText" HorizontalAlignment="Right" Height="475" 
-                 Margin="0,-516,514,0" VerticalAlignment="Top" Width="526" 
+                 Margin="0,-547,514,0" VerticalAlignment="Top" Width="526" 
                  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" 
                  HorizontalScrollBarVisibility="Auto"
                  AcceptsReturn="True"   TextChanged="NoteText_OnTextChanged"
@@ -127,10 +128,10 @@
             <TextBox x:Name="NewNoteNameTextBox" Visibility="Hidden" Text="Note Name" HorizontalAlignment="Left" Height="23" Margin="124,-509,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="340" GotFocus="NewNoteNameTextBox_OnGotFocus"  LostFocus="NewNoteNameTextBox_OnLostFocus"/>
 
             <Label x:Name="FindAndChange" Visibility="Hidden" Background="White" Margin="360,-522,525,433"/>
-            <WebBrowser  x:Name="RenderdMarkDownNote" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="475" Margin="636,-516,0,0" VerticalAlignment="Top" Width="515" Navigating="RenderdMarkDownNote_Navigating" />
+            <WebBrowser  x:Name="RenderdMarkDownNote" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="475" Margin="636,-547,0,0" VerticalAlignment="Top" Width="515" Navigating="RenderdMarkDownNote_Navigating" />
 
-            <TextBox x:Name="FilterString" Margin="-7,-516,1050,488" TextChanged="FilterString_TextChanged"/>
-
+            <TextBox x:Name="FilterString" Margin="-7,-547,1050,519" TextChanged="FilterString_TextChanged" materialDesign:HintAssist.Hint="Search"/>
+            <!--<Label Style="{DynamicResource NoteText_OnTextChanged}" Content="" RenderTransformOrigin="0.9,-0.52" Margin="553,-37,424,5"/>-->
         </Grid>
     </DockPanel>
 </Window>

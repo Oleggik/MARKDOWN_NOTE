@@ -12,7 +12,7 @@ namespace MarkdownNotes.DataAccess
         public static NotesDL GetInstance;
         
         /// <summary>
-        /// Constructor
+        /// Constructor 
         /// </summary>
         static NotesDL()
         {
@@ -44,6 +44,7 @@ namespace MarkdownNotes.DataAccess
                     new KeyValuePair<string, object>("UserName", userName),
                     new KeyValuePair<string, object>("NoteName", note.Name),
                     new KeyValuePair<string, object>("NoteText", note.Text),
+                    //new KeyValuePair<string, object>("CategoryID", note.ID),
                     new KeyValuePair<string, object>("IsHidden", note.IsHidden),
                     new KeyValuePair<string, object>("SharedToEveryone", note.SharedToEveryone)
                 });
