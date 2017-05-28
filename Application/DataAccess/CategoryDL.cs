@@ -26,17 +26,18 @@ namespace MarkdownNotes.DataAccess
             /// </summary>
             /// <param name="userName"></param>
             /// <returns></returns>
-            public Category[] GetCategoryList(string userName)
+            public Category[] GetCategoryList(string UserName)
             {
-                return MasterDL.GetInstance.GetCategorylist(userName);
+                return MasterDL.GetInstance.GetCategorylist(UserName);
             }
 
-            public string AddCategory(string CategoryName)
+            public string AddCategory(Category category, string userName)
             {
                 var returnValue = MasterDL.GetInstance.ExecuteStoredProcedure<string>("dc_CategoryAdd_1",
                     new List<KeyValuePair<string, object>>
                     {
-                        new KeyValuePair<string, object>("Name", CategoryName),
+                        new KeyValuePair<string, object>("Name", category.Name),
+                        new KeyValuePair<string, object>("UserName", userName),
                     });
 
                 if (!string.IsNullOrEmpty(returnValue))

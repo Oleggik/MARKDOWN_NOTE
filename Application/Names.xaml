@@ -1,0 +1,26 @@
+﻿<Window x:Class="MarkdownNotes.Names"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MarkdownNotes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="13"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        mc:Ignorable="d"
+        Icon="Icon.ico"
+        Title="Names" 
+        Height="150.158" Width="222.386" 
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen"
+        Topmost="True">
+    <Grid>
+        <TextBox x:Name="NewName" Margin="10,23,10,0" Height="37" VerticalAlignment="Top" materialDesign:HintAssist.Hint="New name"/>
+        <Button ToolTip="ОК" Content="OK" Click="ОК_onClick" VerticalAlignment="Top" Margin="142,72,10,0" Height="30" IsDefault="True">
+        </Button>
+
+    </Grid>
+</Window>

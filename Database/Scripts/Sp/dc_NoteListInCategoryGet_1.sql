@@ -1,19 +1,20 @@
 USE [MarkdownNotes]
 
-IF object_id( N'dbo.dc_NotelistGet_1') IS NOT NULL
+IF object_id( N'dbo.dc_NoteListInCategoryGet_1') IS NOT NULL
 BEGIN 
- PRINT 'Dropping Procedure dbo.dc_NotelistGet_1...'
- DROP PROCEDURE dbo.dc_NotelistGet_1
+ PRINT 'Dropping Procedure dbo.dc_NoteListInCategoryGet_1...'
+ DROP PROCEDURE dbo.dc_NoteListInCategoryGet_1
 END
 
-PRINT 'Creating Procedure dbo.dc_NotelistGet_1...'
+PRINT 'Creating Procedure dbo.dc_NoteListInCategoryGet_1...'
 SET QUOTED_IDENTIFIER ON
 SET ANSI_NULLS ON
 GO
 
 
-CREATE PROCEDURE dbo.dc_NotelistGet_1
+CREATE PROCEDURE dbo.dc_NoteListInCategoryGet_1
   @UserName nvarchar(Max),
+  @CategoryID int,
   @ReturnValue nvarchar(50) output
 
 AS
@@ -25,14 +26,15 @@ BEGIN
   SELECT DISTINCT  nt.ID, nt.Name FROM dbo.Notes nt 
   JOIN dbo.NotesSharing ns ON ns.NoteID = nt.ID
   JOIN dbo.Users us ON ns.UserID = us.UserID 
-  where us.Name = @UserName and nt.CategoryID is null
+  JOIN dbo.Category ct ON us.UserID = ct.OwnerID
+  where us.Name = @UserName and nt.CategoryID = @CategoryID
+  
   
 
 /*GRANT EXEC ON dbo.dc_NotelistGet_1 TO sa 
 SELECT [Password] FROM MarkdownNotes.dbo.Notes Where NoteName =  'User1'
 */
 END
-
 GO
 
 

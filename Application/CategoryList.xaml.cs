@@ -36,11 +36,11 @@ namespace MarkdownNotes
             }
         }
 
-
         private void SetCategory_OnClick(object sender, RoutedEventArgs e)
         {
             if (CategoriesList.SelectedIndex != -1)
                 CategoryDL.GetInstance.SetCategory((int)Application.Current.Properties["SelsectedNote"], ((Category)CategoriesList.Items[CategoriesList.SelectedIndex]).Id);
+            this.Close();
             MessageBox.Show("Note successfully moved to category");
         }
 
@@ -50,13 +50,22 @@ namespace MarkdownNotes
             {
                 return;
             }
-            string newName = Interaction.InputBox("NewName");
+
+            string newName;
+
+            Names name = new Names();
+            name.ShowDialog();
+            newName = name.NewName.Text;
             if (newName == "")
                 return;
-            (CategoriesList.SelectedItems[0] as Category).Name = newName;
-            CategoriesList.Items.Refresh();
 
-            CategoryDL.GetInstance.RenameCategory((CategoriesList.SelectedItems[0] as Category).Id, (CategoriesList.SelectedItems[0] as Category).Name);
+            //string newName = Interaction.InputBox("NewName");
+            //    if (newName == "") return;
+
+            //(CategoriesList.SelectedItems[0] as Category).Name = newName;
+            //CategoriesList.Items.Refresh();
+
+            CategoryDL.GetInstance.RenameCategory((CategoriesList.SelectedItems[0] as Category).Id, newName);
             InitCategory();
         }
 

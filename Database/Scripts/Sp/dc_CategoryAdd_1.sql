@@ -15,6 +15,7 @@ GO
 
 CREATE PROCEDURE [dbo].[dc_CategoryAdd_1]	
 	@Name nvarchar(Max),
+	@UserName nvarchar(Max),
 	@ReturnValue nvarchar(50) output
 
 AS
@@ -22,13 +23,19 @@ BEGIN
   SET NOCOUNT ON;
   SET XACT_ABORT ON;
 
-   IF NOT EXISTS (SELECT 1 FROM dbo.Category WHERE Name = @Name)
+  DECLARE @OwnerID int
+
+  SET @OwnerID = (SELECT UserID FROM dbo.Users where Name = @UserName);
+
+  IF NOT EXISTS (SELECT 1  FROM dbo.Category ct 
+					 JOIN dbo.Users us ON ct.OwnerID = us.UserID 
+						 where us.Name = @UserName and ct.Name = @Name)
   BEGIN
-	INSERT INTO [dbo].[Category] ([Name]) VALUES  (@Name)
+	INSERT INTO [dbo].[Category] ([Name], [OwnerID]) VALUES  (@Name, @OwnerID)
   END
   ELSE
   BEGIN
-	SET @ReturnValue = 'Ctaegory "' + @Name + '" exist in DB'
+	SET @ReturnValue = 'Category "' + @Name + '" exist in DB'
   END
 
   END

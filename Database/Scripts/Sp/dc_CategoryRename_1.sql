@@ -15,14 +15,15 @@ GO
 
 CREATE PROCEDURE [dbo].[dc_CategoryRename_1]
   @ID int,
-  @Name nvarchar(Max)
+  @Name nvarchar(Max),
+  @ReturnValue nvarchar(50) output
   
 AS
 BEGIN
   SET NOCOUNT ON;
   SET XACT_ABORT ON;
 
-	UPDATE [dbo].[Category] set [Name] = IsNull(@Name,Name)
+	UPDATE [dbo].[Category] set [Name] = @Name
 	WHERE ID = @ID
 
 END

@@ -96,24 +96,29 @@ namespace MarkdownNotes
         string pas = "";
         int i = 0;
 
-        private void ChangeSymbolsInPassword(object sender, TextCompositionEventArgs e)
-
+        unsafe private void ChangeSymbolsInPassword(object sender, TextCompositionEventArgs e)
         {
             pas = pas + e.Text;
-            i++;
-            passwordBox.Text = new string('*', i);
+            
+            passwordBox.Text = new string('*', i++);
             passwordBox.SelectionStart = passwordBox.Text.Length;
         }
 
         private void Backspace_OnClick(object sender, KeyEventArgs e)
         {
-            
             if (e.Key == Key.Back)
-            
             {
-                i--;
-                pas = pas.Remove(pas.Length - 1, 1);
-                passwordBox.SelectionStart = passwordBox.Text.Length - 1;
+                
+                if (i <= 0)
+                {
+                    
+                }
+                else
+                {
+                    i--;
+                    pas = pas.Remove(pas.Length - 1, 1);
+                    passwordBox.SelectionStart = passwordBox.Text.Length;
+                }
             }
         }
 

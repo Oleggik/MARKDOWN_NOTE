@@ -34,15 +34,15 @@ namespace MarkdownNotes
             if (ToFind.Text.Length != 0)
             {
                 TextBox NoteText = parent.NoteText;
-                string textNotes = NoteText.Text;
+                string textNotes = NoteText.Text.ToLower();
                 if (textNotes == "")
                     return;
                 int pos = NoteText.SelectionStart + NoteText.SelectionLength;
                 string nextText = NoteText.Text.Substring(pos, NoteText.Text.Length - pos);
-                int posOffset = nextText.IndexOf(ToFind.Text);
+                int posOffset = nextText.IndexOf(ToFind.Text.ToLower());
                 if (posOffset < 0)
                 {
-                    MessageBox.Show("No matches found");
+                    MessageBox.Show("Reached the end of the document. No matches found");
                     NoteText.SelectionStart = pos = 0;
                     NoteText.SelectionLength = 0;
                     return;
@@ -50,6 +50,7 @@ namespace MarkdownNotes
                 NoteText.Focus();
                 NoteText.SelectionStart = pos + posOffset;
                 NoteText.SelectionLength = ToFind.Text.Length;
+                
             }
             else
             {
@@ -64,15 +65,15 @@ namespace MarkdownNotes
                 if (ToChange.Text.Length != 0)
                 {
                     TextBox NoteText = parent.NoteText;
-                    string textNotes = NoteText.Text;
+                    string textNotes = NoteText.Text.ToLower();
                     if (textNotes == "")
                         return;
                     int pos = NoteText.SelectionStart + NoteText.SelectionLength;
                     string nextText = NoteText.Text.Substring(pos, NoteText.Text.Length - pos);
-                    int posOffset = nextText.IndexOf(ToFind.Text);
+                    int posOffset = nextText.IndexOf(ToFind.Text.ToLower());
                     if (posOffset < 0)
                     {
-                        MessageBox.Show("No matches found");
+                        MessageBox.Show("Reached the end of the document. No matches found");
                         NoteText.SelectionStart = pos = 0;
                         NoteText.SelectionLength = 0;
                         return;

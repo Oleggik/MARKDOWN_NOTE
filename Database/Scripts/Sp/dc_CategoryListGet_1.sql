@@ -13,20 +13,26 @@ GO
 
 
 CREATE PROCEDURE dbo.dc_CategoryListGet_1
+  @UserName nvarchar(Max),	
   @ReturnValue nvarchar(50) output
 
 AS
 BEGIN
   SET NOCOUNT ON;
   SET XACT_ABORT ON;
+
+  SELECT DISTINCT  ct.ID, ct.Name FROM dbo.Category ct 
+  JOIN dbo.Users us ON ct.OwnerID = us.UserID 
+  where us.Name = @UserName  
   
-  DECLARE @test varchar(50)
+  --DECLARE @OwnerID int
 
+  --SET @OwnerID = (SELECT UserID FROM dbo.Users where Name = @UserName);
 
-	SELECT ID, Name FROM MarkdownNotes.dbo.Category
-  
+  --SELECT DISTINCT Name FROM dbo.Category
+  --WHERE OwnerID = @OwnerID
 
-/*GRANT EXEC ON dbo.dc_UserListGet_1 TO sa
+/*GRANT EXEC ON dbo.dc_CategoryListGet_1 TO sa
 SELECT [Password] FROM MarkdownNotes.dbo.Users Where UserName =  'User1'
 */
 END

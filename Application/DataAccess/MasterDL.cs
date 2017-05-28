@@ -108,6 +108,52 @@ namespace MarkdownNotes.DataAccess
             return notes.ToArray();
         }
 
+        public Note[] GetNoteInCategorylist(string userName)
+        {
+            List<Note> notes = new List<Note>();
+            using (var conn = new SqlConnection(connectionString))
+            {
+                using (var cmd = new SqlCommand("dc_NoteListInCategoryGet_1", conn) { CommandType = CommandType.StoredProcedure })
+                {
+
+
+                    cmd.Parameters.AddWithValue("@UserName", userName);
+                    //cmd.Parameters.AddWithValue("@CategoryID", categoryID);
+
+                    var returnValueParam = new SqlParameter("@ReturnValue", SqlDbType.NVarChar, 1000)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+
+                    cmd.Parameters.Add(returnValueParam);
+
+                    conn.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader != null && reader.HasRows)
+                        {
+                            int fieldIDIndex = reader.GetOrdinal("ID");
+                            int fieldNameIndex = reader.GetOrdinal("Name");
+
+                            while (reader.Read())
+                            {
+                                Note note = new Note()
+                                {
+                                    Id = reader.GetInt32(fieldIDIndex),
+                                    Name = reader.GetString(fieldNameIndex)
+                                };
+                                notes.Add(note);
+                            }
+                        }
+                    }
+
+                }
+            }
+
+            return notes.ToArray();
+        }
+
+
         /// <summary>
         /// Sets all previously cached application values
         /// </summary>
@@ -205,13 +251,16 @@ namespace MarkdownNotes.DataAccess
             return notes.ToArray();
         }
 
-        public Category[] GetCategorylist(string userName)
+
+        public Category[] GetCategorylist(string UserName)
         {
-            List<Category> notes = new List<Category>();
+            List<Category> categories = new List<Category>();
             using (var conn = new SqlConnection(connectionString))
             {
                 using (var cmd = new SqlCommand("dc_CategoryListGet_1", conn) { CommandType = CommandType.StoredProcedure })
                 {
+                    cmd.Parameters.AddWithValue("@UserName", UserName);
+
                     var returnValueParam = new SqlParameter("@ReturnValue", SqlDbType.NVarChar, 1000)
                     {
                         Direction = ParameterDirection.Output
@@ -220,6 +269,8 @@ namespace MarkdownNotes.DataAccess
                     cmd.Parameters.Add(returnValueParam);
 
                     conn.Open();
+
+
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader != null && reader.HasRows)
@@ -229,12 +280,12 @@ namespace MarkdownNotes.DataAccess
 
                             while (reader.Read())
                             {
-                                Category note = new Category()
+                                Category category = new Category()
                                 {
                                     Id = reader.GetInt32(fieldIDIndex),
                                     Name = reader.GetString(fieldNameIndex)
                                 };
-                                notes.Add(note);
+                                categories.Add(category);
                             }
                         }
                     }
@@ -242,7 +293,7 @@ namespace MarkdownNotes.DataAccess
                 }
             }
 
-            return notes.ToArray();
+            return categories.ToArray();
         }
 
     }

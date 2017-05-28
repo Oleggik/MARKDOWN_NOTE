@@ -17,6 +17,9 @@ using MarkdownNotes.DataAccess;
 using Microsoft.Win32;
 using System.IO;
 using Microsoft.VisualBasic;
+using System.Text.RegularExpressions;
+using System.Globalization;
+using System.Threading;
 
 namespace MarkdownNotes
 {
@@ -44,10 +47,10 @@ namespace MarkdownNotes
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        {            
             var addedItems = e.AddedItems;
             if (addedItems.Count > 0)
-            {      
+            {
                 NoteText.Text = NotesDL.GetInstance.GetNote(((Note)addedItems[0]).Id).Text;  
             }
             RenderMarkDown(NoteText.Text);
@@ -60,49 +63,58 @@ namespace MarkdownNotes
             if (NotesList.SelectedItems.Count > 0)
             {
                 NotesDL.GetInstance.UpdateNoteText(((Note) NotesList.SelectedItems[0]).Id, NoteText.Text);
-
-            }
-            else
-            {
-                Note note = new Note
-                {
-                    Name = NewNoteNameTextBox.Text,
-                    Text = NoteText.Text
-                };
-
-                NotesDL.GetInstance.AddNote(Application.Current.Properties["UserName"].ToString(), note);
-                InitNotes();
-                
-                NewNoteNameTextBox.Visibility = Visibility.Hidden;
-                NewNoteNameTextBox.Text = string.Empty;
             }
             MessageBox.Show("File successfully saved");
         }
 
         private void CreateNewNote_OnClick(object sender, RoutedEventArgs e)
         {
+            string newName;
+
             NoteText.Text = String.Empty;
             NotesList.UnselectAll();
-            
-            NewNoteNameTextBox.Visibility = Visibility.Visible;
+
+            Names name = new Names();
+            name.ShowDialog();
+            newName = name.NewName.Text;
+            if (newName == "") return;
+
+            Note note = new Note
+            {
+                Name = newName,
+                Text = NoteText.Text
+            };
+
+            NotesDL.GetInstance.AddNote(Application.Current.Properties["UserName"].ToString(), note);
+            InitNotes();
+
+            MessageBox.Show("File successfully saved");
         }
 
         private void AddCategory_OnClick(object sender, RoutedEventArgs e)
         {
-            //Category category = new Category
-            //{
-            //    Name = Interaction.InputBox("CategoryName")
-            //};
+            string newName;
 
-            //CategoryDL.GetInstance.AddCategory(Application.Current.Properties["CategoryName"].ToString());
-            //InitCategory();
-            //MessageBox.Show("Category successfully created");
+            Names name = new Names();
+            name.ShowDialog();
+            newName = name.NewName.Text;
+            if (newName == "") return;
+
+            Category category = new Category
+            {
+                Name = newName
+            };
+
+            CategoryDL.GetInstance.AddCategory(category, Application.Current.Properties["UserName"].ToString());
+            MessageBox.Show("Category successfully created");
         }
 
         private void FindAndChange_OnClick(object sender, RoutedEventArgs e)
         {
-            if (finder == null)
-                finder = new Find_and_Change(this);
+            NoteText.Focus();
+            NoteText.SelectionStart = 0;
+
+            finder = new Find_and_Change(this);
             finder.Show();
         }
 
@@ -206,18 +218,6 @@ namespace MarkdownNotes
             NoteText.SelectionStart = NoteText.Text.Length - 3;
         }
 
-        private void NewNoteNameTextBox_OnGotFocus(object sender, RoutedEventArgs e)
-        {
-            if (NewNoteNameTextBox.Text == "Note Name")
-                NewNoteNameTextBox.Text = String.Empty;
-        }
-
-        private void NewNoteNameTextBox_OnLostFocus(object sender, RoutedEventArgs e)
-        {
-            if (NewNoteNameTextBox.Text == String.Empty)
-                NewNoteNameTextBox.Text = "Note Name";
-        }
-
         private void RenderMarkDown(string text)
         {
             if (!string.IsNullOrEmpty(NoteText.Text))
@@ -284,13 +284,15 @@ namespace MarkdownNotes
             {
                 return;
             }
-            string newName = Interaction.InputBox("NewName");
+
+            string newName;
+            Names name = new Names();
+            name.ShowDialog();
+            newName = name.NewName.Text;
             if (newName == "")
                 return;
-            (NotesList.SelectedItems[0] as Note).Name = newName;
-            NotesList.Items.Refresh();
 
-            NotesDL.GetInstance.UpdateNoteName((NotesList.SelectedItems[0] as Note).Id, (NotesList.SelectedItems[0] as Note).Name);
+            NotesDL.GetInstance.UpdateNoteName((NotesList.SelectedItems[0] as Note).Id, newName);
             InitNotes();
         }
 
@@ -329,7 +331,9 @@ namespace MarkdownNotes
         private void ButtonSync_OnClick(object sender, RoutedEventArgs e)
         {
             InitNotes();
+            RenderdMarkDownNote.Refresh();
         }
+
 
         private void FilterString_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -338,7 +342,8 @@ namespace MarkdownNotes
                 if (obj is Note)
                 {
                     Note note = obj as Note;
-                    return note.Name.Contains(FilterString.Text);
+
+                    return note.Name.ToLower().Contains(FilterString.Text.ToLower());
                 }
                 return false;
             };

@@ -35,6 +35,7 @@ namespace MarkdownNotes
         {
             if(UsersList.SelectedIndex !=-1)
                 NotesDL.GetInstance.AddNoteSharing(((User)UsersList.Items[UsersList.SelectedIndex]).Id, (int)Application.Current.Properties["SelsectedNote"]);
+            this.Close();
             MessageBox.Show("You have successfully shared a note!");
         }
     }

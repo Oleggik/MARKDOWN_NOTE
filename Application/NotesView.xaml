@@ -44,9 +44,7 @@
                 <Button ToolTip="Italic" Click="ButtonItalic_OnClick">
                     <materialDesign:PackIcon Kind="FormatItalic"/>
                 </Button>
-                <Button ToolTip="Underline">
-                    <materialDesign:PackIcon Kind="FormatUnderline"/>
-                </Button>
+
                 <Separator/>
                 <Button ToolTip="H1" Click="ButtonHeader1_OnClick">
                     <materialDesign:PackIcon Kind="FormatHeader1"/>
@@ -86,7 +84,8 @@
             </ToolBar>
         </ToolBarTray>
         <Grid VerticalAlignment="Top" Margin="16">
-            <ListBox  BorderBrush="Orange" BorderThickness="2" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemsSource="{DynamicResource Notes}" Grid.IsSharedSizeScope="True" x:Name="NotesList"  HorizontalAlignment="Left" Height="442" Margin="-12,-514,0,0" VerticalAlignment="Top" Width="113" SelectionChanged="ListBox_SelectionChanged"  >
+            <ListBox  BorderBrush="Orange" BorderThickness="2" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"  Grid.IsSharedSizeScope="True" x:Name="NotesList"  HorizontalAlignment="Left" Height="442" Margin="-12,-514,0,0" VerticalAlignment="Top" Width="113" SelectionChanged="ListBox_SelectionChanged"  
+                      ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" SelectedIndex="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -109,7 +108,7 @@
                         <MenuItem Header="Share" Click="MenuItemShare_Click" />
                         <MenuItem Header="To category" Click="MenuItemToCategory_Click" />
                     </ContextMenu>
-
+                    
                     <!--Sets a context menu for each ListBoxItem in the current ListBox-->
                     <Style TargetType="{x:Type ListBoxItem}" >
                         <Setter Property="ContextMenu" Value="{StaticResource MyElementMenu}"/>
@@ -123,9 +122,8 @@
                  HorizontalScrollBarVisibility="Auto"
                  AcceptsReturn="True"   TextChanged="NoteText_OnTextChanged"
                  Background="LightGray" AutoWordSelection="True"
-                     />
+                    SpellCheck.IsEnabled="True" />
             <ListBox x:Name="lbFiles"/>
-            <TextBox x:Name="NewNoteNameTextBox" Visibility="Hidden" Text="Note Name" HorizontalAlignment="Left" Height="23" Margin="124,-509,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="340" GotFocus="NewNoteNameTextBox_OnGotFocus"  LostFocus="NewNoteNameTextBox_OnLostFocus"/>
 
             <Label x:Name="FindAndChange" Visibility="Hidden" Background="White" Margin="360,-522,525,433"/>
             <WebBrowser  x:Name="RenderdMarkDownNote" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="475" Margin="636,-547,0,0" VerticalAlignment="Top" Width="515" Navigating="RenderdMarkDownNote_Navigating" />
