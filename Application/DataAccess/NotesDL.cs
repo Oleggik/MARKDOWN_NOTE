@@ -36,6 +36,11 @@ namespace MarkdownNotes.DataAccess
             return MasterDL.GetInstance.GetNote(noteID);
         }
 
+        public Note[] GetNoteInCategorylist(string userName, int categoryID)
+        {
+            return MasterDL.GetInstance.GetNoteInCategorylist(userName, categoryID);
+        }
+
         public string AddNote(string userName, Note note)
         {
             var returnValue = MasterDL.GetInstance.ExecuteStoredProcedure<string>("dc_NoteAdd_1",

@@ -17,7 +17,6 @@ CREATE PROCEDURE [dbo].[dc_NoteAdd_1]
   @UserName nvarchar(Max),
   @NoteName nvarchar(Max),
   @NoteText nvarchar(Max),
-  @CategoryID nvarchar(Max),
   @IsHidden bit,
   @SharedToEveryone bit,
   @ReturnValue nvarchar(50) output
@@ -34,10 +33,10 @@ BEGIN
 
   IF NOT EXISTS (SELECT 1 FROM dbo.NotesSharing ns INNER JOIN dbo.Notes nt ON ns.NoteID = nt.ID where ns.UserID = @UserID and nt.Name = @NoteName)
   BEGIN
-	INSERT INTO [dbo].[Notes] ([Name] ,[Text], [CategoryID], [IsHidden],[SharedToEveryone], [OwnerID]) VALUES  (@NoteName,@NoteText, @CategoryID, @IsHidden, @SharedToEveryone,@UserID )
+	INSERT INTO [dbo].[Notes] ([Name] ,[Text], [IsHidden],[SharedToEveryone], [OwnerID], [CategoryID]) VALUES  (@NoteName,@NoteText, @IsHidden, @SharedToEveryone,@UserID, 2 )
 	SELECT @NewNoteID = SCOPE_IDENTITY()
 
-	INSERT INTO [dbo].[NotesSharing] ([NoteID] ,[UserID],[ReadOnly] ) VALUES  (@NewNoteID,@UserID, 0 )
+	INSERT INTO [dbo].[NotesSharing] ([NoteID] ,[UserID],[ReadOnly]) VALUES  (@NewNoteID,@UserID, 0)
   END
   ELSE
   BEGIN

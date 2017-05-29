@@ -16,10 +16,6 @@ using System.Windows.Shapes;
 using MarkdownNotes.DataAccess;
 using Microsoft.Win32;
 using System.IO;
-using Microsoft.VisualBasic;
-using System.Text.RegularExpressions;
-using System.Globalization;
-using System.Threading;
 
 namespace MarkdownNotes
 {
@@ -39,6 +35,8 @@ namespace MarkdownNotes
 
         private void InitNotes()
         {
+            Resources["Categories"] = CategoryDL.GetInstance.GetCategoryList(Application.Current.Properties["UserName"].ToString());
+
             Resources["Notes"] = NotesDL.GetInstance.GetNotesList(Application.Current.Properties["UserName"].ToString());
             if (!NotesList.Items.IsEmpty)
             {
@@ -56,6 +54,22 @@ namespace MarkdownNotes
             RenderMarkDown(NoteText.Text);
             NoteText.Focus();
             NoteText.SelectionStart = NoteText.Text.Length;
+        }
+
+        private void ChoseCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ChoseCategory.SelectedIndex != -1)
+            {
+                Resources["Notes"] = NotesDL.GetInstance.GetNoteInCategorylist(Application.Current.Properties["UserName"].ToString(), ((Category)ChoseCategory.Items[ChoseCategory.SelectedIndex]).Id);
+                if (!NotesList.Items.IsEmpty)
+                {
+                    NotesList.SelectedIndex = 0;
+                }
+            }
+            RenderMarkDown(NoteText.Text);
+            NoteText.Focus();
+            NoteText.SelectionStart = NoteText.Text.Length;
+
         }
 
         private void ButtonSave_OnClick(object sender, RoutedEventArgs e)
@@ -106,6 +120,7 @@ namespace MarkdownNotes
             };
 
             CategoryDL.GetInstance.AddCategory(category, Application.Current.Properties["UserName"].ToString());
+            InitNotes();
             MessageBox.Show("Category successfully created");
         }
 
@@ -225,10 +240,10 @@ namespace MarkdownNotes
                 disableNavigation = false;
                 RenderdMarkDownNote.NavigateToString(PrepareHtmlBody(CommonMark.CommonMarkConverter.Convert(text)));
             }
-            else
-            {
-                RenderdMarkDownNote.Refresh();
-            }
+            //else
+            //{
+            //    RenderdMarkDownNote.Refresh();
+            //}
         }
 
         private void NoteText_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -331,7 +346,7 @@ namespace MarkdownNotes
         private void ButtonSync_OnClick(object sender, RoutedEventArgs e)
         {
             InitNotes();
-            RenderdMarkDownNote.Refresh();
+            //RenderdMarkDownNote.Refresh();
         }
 
 
@@ -348,5 +363,6 @@ namespace MarkdownNotes
                 return false;
             };
         }
+
     }
 }

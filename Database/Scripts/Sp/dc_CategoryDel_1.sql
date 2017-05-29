@@ -23,6 +23,7 @@ BEGIN
   SET XACT_ABORT ON;
   
   DELETE FROM dbo.Category where ID = @ID
+  UPDATE [dbo].[Notes] SET CategoryID = NULL where CategoryID = @ID;
 
 END
 GO

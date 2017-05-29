@@ -29,7 +29,7 @@ namespace MarkdownNotes.DataAccess
             public Category[] GetCategoryList(string UserName)
             {
                 return MasterDL.GetInstance.GetCategorylist(UserName);
-            }
+            }            
 
             public string AddCategory(Category category, string userName)
             {

@@ -24,7 +24,7 @@ BEGIN
   SELECT DISTINCT  nt.ID, nt.Name FROM dbo.Notes nt 
   JOIN dbo.NotesSharing ns ON ns.NoteID = nt.ID
   JOIN dbo.Users us ON ns.UserID = us.UserID 
-  where us.Name = @UserName
+  where us.Name = @UserName and nt.CategoryID is null
   
 
 /*GRANT EXEC ON dbo.dc_NotelistGet_1 TO sa 

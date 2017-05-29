@@ -22,15 +22,12 @@ BEGIN
   SET XACT_ABORT ON;
 
   SELECT DISTINCT  ct.ID, ct.Name FROM dbo.Category ct 
-  JOIN dbo.Users us ON ct.OwnerID = us.UserID 
-  where us.Name = @UserName  
-  
-  --DECLARE @OwnerID int
+  JOIN dbo.Users us ON ct.OwnerID = us.UserID
+  where us.Name = @UserName
+       union 
+  SELECT DISTINCT ID, Name from dbo.Category where OwnerID is null
 
-  --SET @OwnerID = (SELECT UserID FROM dbo.Users where Name = @UserName);
 
-  --SELECT DISTINCT Name FROM dbo.Category
-  --WHERE OwnerID = @OwnerID
 
 /*GRANT EXEC ON dbo.dc_CategoryListGet_1 TO sa
 SELECT [Password] FROM MarkdownNotes.dbo.Users Where UserName =  'User1'

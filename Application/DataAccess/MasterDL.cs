@@ -108,7 +108,7 @@ namespace MarkdownNotes.DataAccess
             return notes.ToArray();
         }
 
-        public Note[] GetNoteInCategorylist(string userName)
+        public Note[] GetNoteInCategorylist(string userName, int categoryID)
         {
             List<Note> notes = new List<Note>();
             using (var conn = new SqlConnection(connectionString))
@@ -118,7 +118,7 @@ namespace MarkdownNotes.DataAccess
 
 
                     cmd.Parameters.AddWithValue("@UserName", userName);
-                    //cmd.Parameters.AddWithValue("@CategoryID", categoryID);
+                    cmd.Parameters.AddWithValue("@CategoryID", categoryID);
 
                     var returnValueParam = new SqlParameter("@ReturnValue", SqlDbType.NVarChar, 1000)
                     {

@@ -59,14 +59,15 @@ namespace MarkdownNotes
             if (newName == "")
                 return;
 
-            //string newName = Interaction.InputBox("NewName");
-            //    if (newName == "") return;
-
-            //(CategoriesList.SelectedItems[0] as Category).Name = newName;
-            //CategoriesList.Items.Refresh();
-
-            CategoryDL.GetInstance.RenameCategory((CategoriesList.SelectedItems[0] as Category).Id, newName);
+            if (((Category)CategoriesList.Items[CategoriesList.SelectedIndex]).Name != "No category")
+            {
+                CategoryDL.GetInstance.RenameCategory((CategoriesList.SelectedItems[0] as Category).Id, newName);
             InitCategory();
+            }
+            else
+            {
+                MessageBox.Show("This category can not be removed");
+            }
         }
 
         private void CategoryDelete_Click(object sender, RoutedEventArgs e)
@@ -75,8 +76,15 @@ namespace MarkdownNotes
             {
                 return;
             }
-            CategoryDL.GetInstance.DelCategory(((Category)CategoriesList.Items[CategoriesList.SelectedIndex]).Id);
-            InitCategory();
+            if (((Category)CategoriesList.Items[CategoriesList.SelectedIndex]).Name != "No category")
+            {
+                CategoryDL.GetInstance.DelCategory(((Category)CategoriesList.Items[CategoriesList.SelectedIndex]).Id);
+                InitCategory();
+            }
+            else
+            {
+                MessageBox.Show("This category can not be removed");
+            }
         }
     }
 }

@@ -23,6 +23,9 @@ BEGIN
   SET NOCOUNT ON;
   SET XACT_ABORT ON;
   
+  if @ID = 2
+  UPDATE [dbo].[Notes] SET CategoryID = null where ID = @NoteID;
+  else
   UPDATE [dbo].[Notes] SET CategoryID = @ID where ID = @NoteID;
 
 END
