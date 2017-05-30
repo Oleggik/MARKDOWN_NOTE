@@ -66,7 +66,7 @@ namespace MarkdownNotes
             }
             else
             {
-                MessageBox.Show("This category can not be removed");
+                MessageBox.Show("This category can not be re-named");
             }
         }
 

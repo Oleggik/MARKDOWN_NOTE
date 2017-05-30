@@ -132,7 +132,7 @@
                  HorizontalScrollBarVisibility="Auto"
                  AcceptsReturn="True"   TextChanged="NoteText_OnTextChanged"
                  Background="LightGray" AutoWordSelection="True"
-                    SpellCheck.IsEnabled="True" />
+                     />
             <ListBox x:Name="lbFiles"/>
 
             <Label x:Name="FindAndChange" Visibility="Hidden" Background="White" Margin="360,-522,525,433"/>
